@@ -52,4 +52,5 @@ To remove everything, including Docker containers, images, and volumes:
 `make clean-all`
 ## Restart and Rebuild Docker Images and Containers
 To rebuild and restart the server:
+
 `make rebuild`
