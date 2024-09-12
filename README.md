@@ -44,6 +44,7 @@ Remove Docker Containers and Images
 To stop and remove Docker containers and images, run:
 
 `make down`
+
 `make clean-image`
 
 To remove everything, including Docker containers, images, and volumes:
