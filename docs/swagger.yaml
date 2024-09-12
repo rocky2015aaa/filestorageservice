@@ -1,0 +1,215 @@
+basePath: /
+definitions:
+  models.DownloadResp:
+    properties:
+      data:
+        example: data file
+        type: string
+      description:
+        example: File uploaded and split
+        type: string
+      error:
+        example: ""
+        type: string
+      success:
+        example: true
+        type: boolean
+    type: object
+  models.ErrorResp:
+    properties:
+      data:
+        example: "null"
+        type: string
+      description:
+        example: Failed to retrieve files
+        type: string
+      error:
+        example: Failed to retrieve files
+        type: string
+      success:
+        example: false
+        type: boolean
+    type: object
+  models.FilePartSwagger:
+    properties:
+      created_at:
+        description: Timestamp when the part was created
+        example: "2024-09-12T17:39:51.792128+09:00"
+        type: string
+      file_content:
+        description: File part content (stored as binary data)
+        example: dAojIGt1a3UKdGhpcyBpcyBhIGN1
+        type: string
+      file_id:
+        description: Identifier for the whole file, indexed
+        example: 57c18389-32cc-4248-9e74-47d27658456e
+        type: string
+      file_index:
+        description: Part number or index
+        example: 4
+        type: integer
+      file_size:
+        description: File size in bytes
+        example: 154
+        type: integer
+      file_type:
+        description: File type
+        example: text/plain
+        type: string
+      id:
+        description: Auto-incrementing primary key
+        example: 31
+        type: integer
+      original_file_name:
+        description: Original file name (optional)
+        example: one.txt
+        type: string
+      updated_at:
+        description: Timestamp for the last update
+        example: "2024-09-12T17:39:51.792128+09:00"
+        type: string
+    type: object
+  models.GetFileDataResp:
+    properties:
+      data:
+        $ref: '#/definitions/models.FilePartSwagger'
+      description:
+        example: Getting file data has succeeded
+        type: string
+      error:
+        example: ""
+        type: string
+      success:
+        example: true
+        type: boolean
+    type: object
+  models.HealthResp:
+    properties:
+      data:
+        example: "null"
+        type: string
+      description:
+        example: ok
+        type: string
+      error:
+        example: ""
+        type: string
+      success:
+        example: true
+        type: boolean
+    type: object
+  models.UploadResp:
+    properties:
+      data:
+        example: 57c18389-32cc-4248-9e74-47d27658456e
+        type: string
+      description:
+        example: File uploaded and split
+        type: string
+      error:
+        example: ""
+        type: string
+      success:
+        example: true
+        type: boolean
+    type: object
+host: localhost
+info:
+  contact:
+    email: rocky2010aaa@gmail.com
+    name: Donggeon Lee
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: File Storage Service
+  version: 1.0.0
+paths:
+  /api/v1/download:
+    get:
+      consumes:
+      - application/json
+      description: Get file
+      parameters:
+      - description: File ID
+        in: path
+        name: file_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.DownloadResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResp'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResp'
+      tags:
+      - File
+  /api/v1/files-data:
+    get:
+      consumes:
+      - application/json
+      description: Get subfile data
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GetFileDataResp'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResp'
+      tags:
+      - File
+  /api/v1/ping:
+    get:
+      consumes:
+      - application/json
+      description: Check Server Status
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.HealthResp'
+      tags:
+      - Ping
+  /api/v1/upload:
+    post:
+      consumes:
+      - application/json
+      description: Upload a file
+      parameters:
+      - description: File metadata and content
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.UploadResp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResp'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResp'
+      tags:
+      - File
+swagger: "2.0"

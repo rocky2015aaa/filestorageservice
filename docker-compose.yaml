@@ -1,0 +1,32 @@
+services:
+
+  file_storage_service:
+    container_name: filestorageservice
+    image:
+      rocky2015aaa/filestorageservice:latest
+    ports:
+      - ${SVR_PORT:-8080}:8080
+    restart: unless-stopped
+    depends_on:
+      service_db:
+        condition: service_healthy
+    links:
+      - service_db
+
+  service_db:
+    container_name: service_db
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-1q2w3e4r}
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+    volumes:
+      - $HOME${POSTGRES_DB_VOLUME_PATH:-/data/postgres}:/var/lib/postgresql/data
+    ports:
+      - ${POSTGRES_PORT:-5432}:5432
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 3

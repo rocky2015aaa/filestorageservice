@@ -1,0 +1,311 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "File Storage Service",
+        "contact": {
+            "name": "Donggeon Lee",
+            "email": "rocky2010aaa@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "host": "localhost",
+    "basePath": "/",
+    "paths": {
+        "/api/v1/download": {
+            "get": {
+                "description": "Get file",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "File"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "File ID",
+                        "name": "file_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.DownloadResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResp"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/files-data": {
+            "get": {
+                "description": "Get subfile data",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "File"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.GetFileDataResp"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/ping": {
+            "get": {
+                "description": "Check Server Status",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Ping"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.HealthResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/upload": {
+            "post": {
+                "description": "Upload a file",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "File"
+                ],
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "File metadata and content",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.UploadResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResp"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResp"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.DownloadResp": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "string",
+                    "example": "data file"
+                },
+                "description": {
+                    "type": "string",
+                    "example": "File uploaded and split"
+                },
+                "error": {
+                    "type": "string",
+                    "example": ""
+                },
+                "success": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "models.ErrorResp": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "string",
+                    "example": "null"
+                },
+                "description": {
+                    "type": "string",
+                    "example": "Failed to retrieve files"
+                },
+                "error": {
+                    "type": "string",
+                    "example": "Failed to retrieve files"
+                },
+                "success": {
+                    "type": "boolean",
+                    "example": false
+                }
+            }
+        },
+        "models.FilePartSwagger": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "description": "Timestamp when the part was created",
+                    "type": "string",
+                    "example": "2024-09-12T17:39:51.792128+09:00"
+                },
+                "file_content": {
+                    "description": "File part content (stored as binary data)",
+                    "type": "string",
+                    "example": "dAojIGt1a3UKdGhpcyBpcyBhIGN1"
+                },
+                "file_id": {
+                    "description": "Identifier for the whole file, indexed",
+                    "type": "string",
+                    "example": "57c18389-32cc-4248-9e74-47d27658456e"
+                },
+                "file_index": {
+                    "description": "Part number or index",
+                    "type": "integer",
+                    "example": 4
+                },
+                "file_size": {
+                    "description": "File size in bytes",
+                    "type": "integer",
+                    "example": 154
+                },
+                "file_type": {
+                    "description": "File type",
+                    "type": "string",
+                    "example": "text/plain"
+                },
+                "id": {
+                    "description": "Auto-incrementing primary key",
+                    "type": "integer",
+                    "example": 31
+                },
+                "original_file_name": {
+                    "description": "Original file name (optional)",
+                    "type": "string",
+                    "example": "one.txt"
+                },
+                "updated_at": {
+                    "description": "Timestamp for the last update",
+                    "type": "string",
+                    "example": "2024-09-12T17:39:51.792128+09:00"
+                }
+            }
+        },
+        "models.GetFileDataResp": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/models.FilePartSwagger"
+                },
+                "description": {
+                    "type": "string",
+                    "example": "Getting file data has succeeded"
+                },
+                "error": {
+                    "type": "string",
+                    "example": ""
+                },
+                "success": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "models.HealthResp": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "string",
+                    "example": "null"
+                },
+                "description": {
+                    "type": "string",
+                    "example": "ok"
+                },
+                "error": {
+                    "type": "string",
+                    "example": ""
+                },
+                "success": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        },
+        "models.UploadResp": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "string",
+                    "example": "57c18389-32cc-4248-9e74-47d27658456e"
+                },
+                "description": {
+                    "type": "string",
+                    "example": "File uploaded and split"
+                },
+                "error": {
+                    "type": "string",
+                    "example": ""
+                },
+                "success": {
+                    "type": "boolean",
+                    "example": true
+                }
+            }
+        }
+    }
+}
