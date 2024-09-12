@@ -122,7 +122,7 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   title: File Storage Service
-  version: 1.0.0
+  version: test
 paths:
   /api/v1/download:
     get:

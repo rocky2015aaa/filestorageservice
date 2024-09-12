@@ -5,12 +5,12 @@ ADD . /app
 WORKDIR /app
 
 # Define build-time arguments
-ARG VERSION=1.0.0
-ARG BUILD=production
+ARG VERSION=dev
+ARG BUILD=dev
 ARG DATE=1970-01-01_00:00:00
 
 # Build the Go application with build-time arguments
-RUN CGO_ENABLED=0 go build -ldflags "-X github.com/rocky2015aaa/filestorageservice/internal/config.Version=${VERSION} -X github.com/shmoulana/hashocr/internal/config.Build=${BUILD} -X github.com/shmoulana/hashocr/internal/config.Date=${DATE}" -o filestorageservice cmd/filestorageservice/main.go
+RUN CGO_ENABLED=0 go build -ldflags "-X github.com/rocky2015aaa/filestorageservice/internal/config.Version=${VERSION} -X github.com/rocky2015aaa/filestorageservice/internal/config.Build=${BUILD} -X github.com/rocky2015aaa/filestorageservice/internal/config.Date=${DATE}" -o filestorageservice cmd/filestorageservice/main.go
 
 FROM alpine:latest
 

@@ -2,8 +2,8 @@
 IMAGE_NAME = rocky2015aaa/filestorageservice
 CONTAINER_NAME = filestorageservice
 PORT = 8080
-VERSION := 1.0.0
-BUILD := production
+VERSION := test
+BUILD := test
 DATE := $(shell date +'%Y-%m-%d_%H:%M:%S')
 
 # Check if Docker image exists

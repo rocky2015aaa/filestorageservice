@@ -10,8 +10,8 @@ import (
 
 var (
 	Date    = ""
-	Version = "dev"
-	Build   = "dev"
+	Version = ""
+	Build   = ""
 )
 
 const (
