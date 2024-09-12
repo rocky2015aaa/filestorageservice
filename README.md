@@ -37,7 +37,7 @@ You can test the API with the following curl commands:
 
 * Download a file
 
-`curl --location 'http://localhost:8080/api/v1/download?file_id={file_id}'`
+`curl --location 'http://localhost:8080/api/v1/download?file_id={file_id}' --output {file_name}`
 ## Clean Up
 Remove Docker Containers and Images
 
