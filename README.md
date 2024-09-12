@@ -16,7 +16,7 @@ After starting the server as described above, you can test the endpoints in two 
 
 **1. Using Postman**
 
-Import the `File Storage Service.postman_collection.json` file from the `internal/testdata` directory into Postman.
+Import the `File Storage Service.postman_collection.json` file from the `internal/testdata/uploads` directory into Postman.
 Make sure to switch the test file in your directory to the appropriate form.
 
 **2. Using CURL**
